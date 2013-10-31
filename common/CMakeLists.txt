@@ -3,6 +3,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 SET(common_sources
 	BasePacket.cpp
 	classes.cpp
+	clientlimits.cpp
 	Condition.cpp
 	crash.cpp
 	CRC16.cpp
@@ -68,7 +69,8 @@ SET(common_sources
 	patches/patches.cpp
 	patches/SoD.cpp
 	patches/SoF.cpp
-	patches/RoF.cpp
+	patches/RoF1.cpp
+	patches/RoF2.cpp
 	patches/Titanium.cpp
 	patches/Underfoot.cpp
 	SocketLib/Base64.cpp
@@ -94,6 +96,7 @@ SET(common_headers
 	bodytypes.h
 	breakdowns.h
 	classes.h
+	clientlimits.h
 	Condition.h
 	crash.h
 	CRC16.h
@@ -200,10 +203,14 @@ SET(common_headers
 	patches/SSDeclare.h
 	patches/SSDefine.h
 	patches/SSRegister.h
-	patches/RoF.h
-	patches/RoF_itemfields.h
-	patches/RoF_ops.h
-	patches/RoF_structs.h
+	patches/RoF1.h
+	patches/RoF1_itemfields.h
+	patches/RoF1_ops.h
+	patches/RoF1_structs.h
+	patches/RoF2.h
+	patches/RoF2_itemfields.h
+	patches/RoF2_ops.h
+	patches/RoF2_structs.h
 	patches/Titanium.h
 	patches/Titanium_itemfields.h
 	patches/Titanium_ops.h
@@ -247,10 +254,14 @@ SOURCE_GROUP(Patches FILES
 	patches/SSDeclare.h
 	patches/SSDefine.h
 	patches/SSRegister.h
-	patches/RoF.h
-	patches/RoF_itemfields.h
-	patches/RoF_ops.h
-	patches/RoF_structs.h
+	patches/RoF1.h
+	patches/RoF1_itemfields.h
+	patches/RoF1_ops.h
+	patches/RoF1_structs.h
+	patches/RoF2.h
+	patches/RoF2_itemfields.h
+	patches/RoF2_ops.h
+	patches/RoF2_structs.h
 	patches/Titanium.h
 	patches/Titanium_itemfields.h
 	patches/Titanium_ops.h
@@ -263,7 +274,8 @@ SOURCE_GROUP(Patches FILES
 	patches/patches.cpp
 	patches/SoD.cpp
 	patches/SoF.cpp
-	patches/RoF.cpp
+	patches/RoF1.cpp
+	patches/RoF2.cpp
 	patches/Titanium.cpp
 	patches/Underfoot.cpp
 )
@@ -314,7 +326,7 @@ ADD_LIBRARY(Common ${common_sources} ${common_headers})
 
 IF(UNIX)
 	ADD_DEFINITIONS(-fPIC)
-	SET_SOURCE_FILES_PROPERTIES("patches/SoD.cpp" "patches/SoF.cpp" "patches/RoF.cpp" "patches/Underfoot.cpp" PROPERTIES COMPILE_FLAGS -O0)
+	SET_SOURCE_FILES_PROPERTIES("patches/SoD.cpp" "patches/SoF.cpp" "patches/RoF1.cpp" "patches/RoF2.cpp" "patches/Underfoot.cpp" PROPERTIES COMPILE_FLAGS -O0)
 ENDIF(UNIX)
 
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/Bin)

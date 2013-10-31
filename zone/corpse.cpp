@@ -21,6 +21,7 @@ Child of the Mob class.
 -Quagmire
 */
 #include "../common/debug.h"
+#include "../common/clientlimits.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -997,14 +998,21 @@ void Corpse::MakeLootRequestPackets(Client* client, const EQApplicationPacket* a
 		ItemList::iterator cur,end;
 		cur = itemlist.begin();
 		end = itemlist.end();
-
+		
 		uint8 containercount = 0;
-		int corpselootlimit;
+		int corpselootlimit = Limits::Corpse::SlotCount(client->GetClientVersion());
+		
+		//	/\ This..
+		//		..replaces this \/	(intended goal of the Limits namespace)
 
-		if(client->GetClientVersion() >= EQClientRoF) { corpselootlimit = 34; }
+		/*
+		int corpselootlimit = 0;
+
+		if(client->GetClientVersion() >= EQClientRoF1) { corpselootlimit = 34; }
 		else if(client->GetClientVersion() >= EQClientSoF) { corpselootlimit = 32; }
 		else if(client->GetClientVersion() == EQClientTitanium) { corpselootlimit = 31; }
 		else { corpselootlimit = 30; }
+		*/
 
 		for(; cur != end; cur++) {
 			ServerLootItem_Struct* item_data = *cur;

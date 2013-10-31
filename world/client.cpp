@@ -159,7 +159,7 @@ void Client::SendCharInfo() {
 		cle->SetOnline(CLE_Status_CharSelect);
 	}
 
-	if (ClientVersionBit & BIT_RoFAndLater)
+	if (ClientVersionBit & BIT_RoF1AndLater)
 	{
 		// Can make max char per account into a rule - New to VoA
 		SendMaxCharCreate(10);
@@ -907,7 +907,7 @@ bool Client::HandleDeleteCharacterPacket(const EQApplicationPacket *app) {
 
 bool Client::HandleZoneChangePacket(const EQApplicationPacket *app) {
 	// HoT sends this to world while zoning and wants it echoed back.
-	if(ClientVersionBit & BIT_RoFAndLater)
+	if(ClientVersionBit & BIT_RoF1AndLater)
 	{
 		QueuePacket(app);
 	}

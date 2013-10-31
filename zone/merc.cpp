@@ -5186,7 +5186,7 @@ void Client::UpdateMercTimer()
 			GetMercTimer()->SetTimer(GetMercInfo().MercTimerRemaining);
 
 			// Send upkeep charge message and reset the upkeep timer
-			if (GetClientVersion() < EQClientRoF)
+			if (GetClientVersion() < EQClientRoF1)
 				SendMercMerchantResponsePacket(10);
 			else
 				SendMercMerchantResponsePacket(11);
@@ -5217,7 +5217,7 @@ bool Client::CheckCanHireMerc(Mob* merchant, uint32 template_id) {
 
 	//invalid merc data
 	if(!mercTemplate) {
-		if (GetClientVersion() < EQClientRoF)
+		if (GetClientVersion() < EQClientRoF1)
 			SendMercMerchantResponsePacket(9);
 		else
 			SendMercMerchantResponsePacket(10);
@@ -5230,19 +5230,19 @@ bool Client::CheckCanHireMerc(Mob* merchant, uint32 template_id) {
 		return false;
 	}
 
-	if(GetClientVersion() >= EQClientRoF && GetNumMercs() >= MAXMERCS) {
+	if(GetClientVersion() >= EQClientRoF1 && GetNumMercs() >= MAXMERCS) {
 		SendMercMerchantResponsePacket(6);
 		return false;
 	}
 	else if(GetMerc()) {													//check for current merc
-		if (GetClientVersion() < EQClientRoF)
+		if (GetClientVersion() < EQClientRoF1)
 			SendMercMerchantResponsePacket(6);
 		else
 			SendMercMerchantResponsePacket(6);
 		return false;
 	}
 	else if(GetMercInfo().mercid != 0 && GetMercInfo().IsSuspended) {		//has suspended merc
-		if (GetClientVersion() < EQClientRoF)
+		if (GetClientVersion() < EQClientRoF1)
 			SendMercMerchantResponsePacket(7);
 		else
 			SendMercMerchantResponsePacket(6);
@@ -5266,7 +5266,7 @@ bool Client::CheckCanHireMerc(Mob* merchant, uint32 template_id) {
 
 	//check group size
 	if(HasGroup() && GetGroup()->GroupCount() >= MAX_GROUP_MEMBERS) {
-		if (GetClientVersion() < EQClientRoF)
+		if (GetClientVersion() < EQClientRoF1)
 			SendMercMerchantResponsePacket(8);
 		else
 			SendMercMerchantResponsePacket(7);
@@ -5274,14 +5274,14 @@ bool Client::CheckCanHireMerc(Mob* merchant, uint32 template_id) {
 	}
 
 	//check in combat
-	if(GetClientVersion() >= EQClientRoF && GetAggroCount() > 0) {
+	if(GetClientVersion() >= EQClientRoF1 && GetAggroCount() > 0) {
 		SendMercMerchantResponsePacket(8);
 		return false;
 	}
 
 	//check for valid merchant - can check near area for any merchants
 	if(!merchant) {
-		if (GetClientVersion() < EQClientRoF)
+		if (GetClientVersion() < EQClientRoF1)
 			SendMercMerchantResponsePacket(14);
 		else
 			SendMercMerchantResponsePacket(16);
@@ -5290,7 +5290,7 @@ bool Client::CheckCanHireMerc(Mob* merchant, uint32 template_id) {
 
 	//check for merchant too far away
 	if(DistNoRoot(*merchant) > USE_NPC_RANGE2) {
-		if (GetClientVersion() < EQClientRoF)
+		if (GetClientVersion() < EQClientRoF1)
 			SendMercMerchantResponsePacket(15);
 		else
 			SendMercMerchantResponsePacket(17);
@@ -5321,7 +5321,7 @@ bool Client::CheckCanUnsuspendMerc() {
 
 	//invalid merc data
 	if(!mercTemplate) {
-		if (GetClientVersion() < EQClientRoF)
+		if (GetClientVersion() < EQClientRoF1)
 			SendMercMerchantResponsePacket(9);
 		else
 			SendMercMerchantResponsePacket(10);
@@ -5342,7 +5342,7 @@ bool Client::CheckCanUnsuspendMerc() {
 
 	//check group size
 	if(HasGroup() && GetGroup()->GroupCount() >= MAX_GROUP_MEMBERS) {
-		if (GetClientVersion() < EQClientRoF)
+		if (GetClientVersion() < EQClientRoF1)
 			SendMercMerchantResponsePacket(8);
 		else
 			SendMercMerchantResponsePacket(7);
@@ -5351,7 +5351,7 @@ bool Client::CheckCanUnsuspendMerc() {
 
 	//check if zone allows mercs
 	if(!zone->AllowMercs()) {
-		if (GetClientVersion() < EQClientRoF)
+		if (GetClientVersion() < EQClientRoF1)
 			SendMercMerchantResponsePacket(4);	// ??
 		else
 			SendMercMerchantResponsePacket(4); // ??
@@ -5359,7 +5359,7 @@ bool Client::CheckCanUnsuspendMerc() {
 	}
 
 	//check in combat
-	if(GetClientVersion() >= EQClientRoF && GetAggroCount() > 0) {
+	if(GetClientVersion() >= EQClientRoF1 && GetAggroCount() > 0) {
 		SendMercMerchantResponsePacket(8);
 		return false;
 	}

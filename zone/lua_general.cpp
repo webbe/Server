@@ -1349,7 +1349,9 @@ luabind::scope lua_register_client_version() {
 			luabind::value("SoF", static_cast<int>(EQClientSoF)),
 			luabind::value("SoD", static_cast<int>(EQClientSoD)),
 			luabind::value("Underfoot", static_cast<int>(EQClientUnderfoot)),
-			luabind::value("RoF", static_cast<int>(EQClientRoF))
+			luabind::value("RoF", static_cast<int>(EQClientRoF1)), // deprecated
+			luabind::value("RoF1", static_cast<int>(EQClientRoF1)),
+			luabind::value("RoF2", static_cast<int>(EQClientRoF2))
 		];
 }
 

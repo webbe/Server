@@ -7,7 +7,8 @@
 #include "Underfoot.h"
 #include "SoF.h"
 #include "SoD.h"
-#include "RoF.h"
+#include "RoF1.h"
+#include "RoF2.h"
 
 void RegisterAllPatches(EQStreamIdentifier &into) {
 	Client62::Register(into);
@@ -15,7 +16,8 @@ void RegisterAllPatches(EQStreamIdentifier &into) {
 	SoF::Register(into);
 	SoD::Register(into);
 	Underfoot::Register(into);
-	RoF::Register(into);
+	RoF1::Register(into);
+	//RoF2::Register(into); // not ready (should be remarked out, if not already)
 }
 
 void ReloadAllPatches() {
@@ -24,5 +26,6 @@ void ReloadAllPatches() {
 	SoF::Reload();
 	SoD::Reload();
 	Underfoot::Reload();
-	RoF::Reload();
+	RoF1::Reload();
+	//RoF2::Reload(); // not ready (should be remarked out, if not already)
 }

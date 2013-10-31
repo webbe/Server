@@ -109,26 +109,27 @@ enum SkillUseTypes : uint32
 /*05837*/	SkillFrenzy,					// This appears to be the only listed one not grouped with the others
 
 // SoF+ specific skills
-// /*03670*/	SkillRemoveTraps,
-// /*13049*/	SkillTripleAttack,
+/*03670*/	SkillRemoveTraps,
+/*13049*/	SkillTripleAttack,
 
 // RoF2+ specific skills
-// /*00789*/	Skill2HPiercing,
-// /*01216*/	SkillNone,						// This needs to move down as new skills are added
+/*00789*/	Skill2HPiercing,
+/*01216*/	SkillNone,						// This needs to move down as new skills are added
 
 // Skill Counts
-// /*-----*/	_SkillCount_62 = 75,			// use for Ti and earlier max skill checks
-// /*-----*/	_SkillCount_SoF = 77,			// use for SoF thru RoF1 max skill checks
-// /*-----*/	_SkillCount_RoF2 = 78,			// use for RoF2 max skill checks
+/*-----*/	_SkillCount_62 = 75,			// use for Ti and earlier max skill checks
+/*-----*/	_SkillCount_SoF = 77,			// use for SoF thru RoF1 max skill checks
+/*-----*/	_SkillCount_RoF2 = 78,			// use for RoF2 max skill checks
 
 // Support values
-// /*-----*/	_SkillServerArraySize = _SkillCount_RoF2,	// Should reflect last client '_SkillCount'
-/*-----*/	_SkillPacketArraySize = 100,				// Currently supported clients appear to iterate full 100 dword buffer range
+/*-----*/	_SkillServerArraySize = SkillNone,	// Should reflect lastest client '_SkillCount_<ver>' aka. 'SkillNone'
+/*-----*/	_SkillPacketArraySize = 100,		// Currently supported clients appear to iterate full 100 dword buffer range
 
 // Superfluous additions to SkillUseTypes..server-use only
 // /*-----*/	ExtSkillGenericTradeskill = 100
 
-/*					([EQClientVersion]	[0] - Unknown, [3] - SoF, [7] - RoF2[05-10-2013])
+/*					[EQClientVersion]	|	[0] - Unknown, [3] - SoF, [7] - RoF2[05-10-2013]
+					------------------------------------------------------------------------
 	[Skill]			[index]	|	[0]		[1]		[2]		[3]		[4]		[5]		[6]		[7]
 	Frenzy			(05837)	|	---		074		074		074		074		074		074		074
 	Remove Traps	(03670)	|	---		---		---		075		075		075		075		075
@@ -148,10 +149,9 @@ enum SkillUseTypes : uint32
 */
 
 /*
-	NOTE: Disregard this until it is sorted out
-
+	(Disregard this note for now..it still needs to be sorted out)
 	I changed (tradeskill==75) to ExtSkillGenericTradeskill in tradeskills.cpp for both instances. 	If it's a pseudo-enumeration of
-	an AA ability, then use the 'ExtSkill' ('ExtentedSkill') prefix with a value >= 100. (current implementation)
+	an AA ability (or anything else), then use the 'ExtSkill' ('ExtentedSkill') prefix with a value >= 100. (current implementation)
 
 	We probably need to recode ALL of the skill checks to use the new Skill2HPiercing and ensure that the animation value is
 	properly changed in the patch files. As far as earlier clients using this new skill, it can be done, but we just need to ensure
@@ -160,8 +160,15 @@ enum SkillUseTypes : uint32
 
 	Nothing on SkillTripleAttack just yet..haven't looked into its current implementation.
 
-	In addition to the above re-coding, we're probably going to need to rework the database pp blob to reserve space for the current
-	100-dword buffer allocation. This way, we can just add new ones without having to rework it each time.
+	The database blob already has space allocated for these new skills. It appears that a 400-byte buffer has been in use for some
+	time, but the actual active skills are limited. The needed space to change the server skill array size from 300 B to 400 B
+	comes from reallocating the first 100 B of the trailing unknown struct to the skills struct (these changes are already active.)
+
+	Anything using the 'skills' array of the player profile should use _SkillPacketArraySize.
+
+	Anything local, such as arrays that are not saved in the character player profile blob or that is not passed to the client,
+	should use _SkillServerArraySize. I still need to research and verify these other array sizes in the client structs to determine
+	their proper values.
 
 	-U
 */

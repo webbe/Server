@@ -1136,7 +1136,7 @@ void TaskManager::TaskSetSelector(Client *c, ClientTaskState *state, Mob *mob, i
 
 void TaskManager::SendTaskSelector(Client *c, Mob *mob, int TaskCount, int *TaskList) {
 
-	if (c->GetClientVersion() >= EQClientRoF)
+	if (c->GetClientVersion() >= EQClientRoF1)
 	{
 		SendTaskSelectorNew(c, mob, TaskCount, TaskList);
 		return;
@@ -2629,7 +2629,7 @@ void TaskManager::SendTaskActivityShort(Client *c, int TaskID, int ActivityID, i
 
 	TaskActivityShort_Struct* tass;
 
-	if(c->GetClientVersionBit() & BIT_RoFAndLater)
+	if(c->GetClientVersionBit() & BIT_RoF1AndLater)
 	{
 		EQApplicationPacket* outapp = new EQApplicationPacket(OP_TaskActivity, 25);
 		outapp->WriteUInt32(ClientTaskIndex);
@@ -2666,7 +2666,7 @@ void TaskManager::SendTaskActivityShort(Client *c, int TaskID, int ActivityID, i
 
 void TaskManager::SendTaskActivityLong(Client *c, int TaskID, int ActivityID, int ClientTaskIndex, bool Optional, bool TaskComplete) {
 
-	if (c->GetClientVersion() >= EQClientRoF)
+	if (c->GetClientVersion() >= EQClientRoF1)
 	{
 		SendTaskActivityNew(c, TaskID, ActivityID, ClientTaskIndex, Optional, TaskComplete);
 		return;
@@ -2940,7 +2940,8 @@ void TaskManager::SendActiveTaskDescription(Client *c, int TaskID, int SequenceN
 								0x12, ItemID, Tasks[TaskID]->Reward,0x12);
 						break;
 					}
-					case EQClientRoF:
+					case EQClientRoF1:
+					case EQClientRoF2:
 					{
 						MakeAnyLenString(&RewardTmp, "%c%06X0000000000000000000000000000000000000000014505DC2%s%c",
 								0x12, ItemID, Tasks[TaskID]->Reward,0x12);
@@ -2974,7 +2975,8 @@ void TaskManager::SendActiveTaskDescription(Client *c, int TaskID, int SequenceN
 									0x12, ItemID, Item->Name ,0x12);
 							break;
 						}
-						case EQClientRoF:
+						case EQClientRoF1:
+						case EQClientRoF2:
 						{
 							MakeAnyLenString(&RewardTmp, "%c%06X0000000000000000000000000000000000000000014505DC2%s%c",
 									0x12, ItemID, Item->Name ,0x12);

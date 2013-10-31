@@ -635,7 +635,7 @@ void Client::Handle_Connect_OP_ReqClientSpawn(const EQApplicationPacket *app)
 	outapp = new EQApplicationPacket(OP_SendExpZonein, 0);
 	FastQueuePacket(&outapp);
 
-	if(GetClientVersion() >= EQClientRoF)
+	if(GetClientVersion() >= EQClientRoF1)
 	{
 		outapp = new EQApplicationPacket(OP_ClientReady, 0);
 		FastQueuePacket(&outapp);
@@ -7875,7 +7875,7 @@ void Client::Handle_OP_Trader(const EQApplicationPacket *app)
 
 			this->Trader_StartTrader();
 
-			if (GetClientVersion() >= EQClientRoF)
+			if (GetClientVersion() >= EQClientRoF1)
 			{
 				EQApplicationPacket* outapp = new EQApplicationPacket(OP_Trader, sizeof(TraderStatus_Struct));
 				TraderStatus_Struct* tss = (TraderStatus_Struct*)outapp->pBuffer;
@@ -9215,7 +9215,7 @@ bool Client::FinishConnState2(DBAsyncWork* dbaw) {
 	// Task Packets
 	LoadClientTaskState();
 
-	if (GetClientVersion() >= EQClientRoF)
+	if (GetClientVersion() >= EQClientRoF1)
 	{
 		outapp = new EQApplicationPacket(OP_ReqNewZone, 0);
 		Handle_Connect_OP_ReqNewZone(outapp);

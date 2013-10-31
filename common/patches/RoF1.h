@@ -1,11 +1,11 @@
-#ifndef RoF_H_
-#define RoF_H_
+#ifndef RoF1_H_
+#define RoF1_H_
 
 #include "../StructStrategy.h"
 
 class EQStreamIdentifier;
 
-namespace RoF {
+namespace RoF1 {
 
 	//these are the only public member of this namespace.
 	extern void Register(EQStreamIdentifier &into);
@@ -27,11 +27,11 @@ namespace RoF {
 
 		//magic macro to declare our opcode processors
 		#include "SSDeclare.h"
-		#include "RoF_ops.h"
+		#include "RoF1_ops.h"
 	};
 
 };
 
 
 
-#endif /*RoF_H_*/
+#endif /*RoF1_H_*/

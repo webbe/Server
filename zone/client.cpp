@@ -7144,7 +7144,7 @@ void Client::SendMercPersonalInfo()
 	uint32 i=0;
 	uint32 altCurrentType = 19; //TODO: Implement alternate currency purchases involving mercs!
 
-	if (GetClientVersion() >= EQClientRoF)
+	if (GetClientVersion() >= EQClientRoF1)
 	{
 		MercTemplate *mercData = &zone->merc_templates[GetMercInfo().MercTemplateID];
 
@@ -7301,7 +7301,7 @@ void Client::SendClearMercInfo()
 
 void Client::DuplicateLoreMessage(uint32 ItemID)
 {
-	if(!(ClientVersionBit & BIT_RoFAndLater))
+	if(!(ClientVersionBit & BIT_RoF1AndLater))
 	{
 		Message_StringID(0, PICK_LORE);
 		return;

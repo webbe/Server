@@ -759,5 +759,7 @@ enum InventorySlot
 	SLOT_INVALID = (int16)0xFFFF
 };
 
+#define _NOTUSED	0
+#define _INVALID	-1
 
 #endif
