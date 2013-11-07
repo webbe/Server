@@ -1223,8 +1223,9 @@ bool ZoneDatabase::GetTradeRecipe(const ItemInst* container, uint8 c_type, uint3
 
 	qlen = MakeAnyLenString(&query, "SELECT tre.recipe_id "
 	" FROM tradeskill_recipe_entries AS tre"
-	" WHERE ( tre.item_id IN(%s) AND tre.componentcount>0 )"
-	" OR ( tre.item_id %s AND tre.iscontainer=1 )"
+	"   INNER JOIN tradeskill_recipe AS tr ON (tre.recipe_id = tr.id) "
+	" WHERE tr.enabled AND (( tre.item_id IN(%s) AND tre.componentcount>0 )"
+	" OR ( tre.item_id %s AND tre.iscontainer=1 ))"
 	" GROUP BY tre.recipe_id HAVING sum(tre.componentcount) = %u"
 	" AND sum(tre.item_id * tre.componentcount) = %u", buf2, containers, count, sum);
 
@@ -1387,7 +1388,7 @@ bool ZoneDatabase::GetTradeRecipe(uint32 recipe_id, uint8 c_type, uint32 some_id
 	" ON tr.id = tre.recipe_id"
 	" LEFT JOIN (SELECT recipe_id, madecount from char_recipe_list WHERE char_id = %u) AS crl "
 	" ON tr.id = crl.recipe_id "
-	" WHERE tr.id = %lu AND tre.item_id %s"
+	" WHERE tr.id = %lu AND tre.item_id %s AND tr.enabled "
 	" GROUP BY tr.id", char_id, (unsigned long)recipe_id, containers);
 
 	if (!RunQuery(query, qlen, errbuf, &result)) {
@@ -1597,4 +1598,32 @@ bool Client::CanIncreaseTradeskill(SkillUseTypes tradeskill) {
 			break; //Other skills unchecked and ability to increase assumed true
 	}
 	return true;
+}
+
+void ZoneDatabase::EnableRecipe(uint32 recipe_id)
+{
+	char *query = 0;
+	uint32 qlen;
+	char errbuf[MYSQL_ERRMSG_SIZE];
+
+	qlen = MakeAnyLenString(&query, "UPDATE tradeskill_recipe SET enabled = 1 WHERE id = %u;", recipe_id);
+
+	if (!RunQuery(query, qlen, errbuf)) {
+		LogFile->write(EQEMuLog::Error, "Error in EnableRecipe query '%s': %s", query, errbuf);
+	}
+	safe_delete_array(query);
+}
+
+void ZoneDatabase::DisableRecipe(uint32 recipe_id)
+{
+	char *query = 0;
+	uint32 qlen;
+	char errbuf[MYSQL_ERRMSG_SIZE];
+
+	qlen = MakeAnyLenString(&query, "UPDATE tradeskill_recipe SET enabled = 0 WHERE id = %u;", recipe_id);
+
+	if (!RunQuery(query, qlen, errbuf)) {
+		LogFile->write(EQEMuLog::Error, "Error in DisableRecipe query '%s': %s", query, errbuf);
+	}
+	safe_delete_array(query);
 }
