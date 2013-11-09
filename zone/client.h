@@ -43,6 +43,7 @@ class Client;
 #include "npc.h"
 #include "merc.h"
 #include "zone.h"
+#include "watermap.h"
 #include "AA.h"
 #include "questmgr.h"
 #include "QGlobals.h"
@@ -337,7 +338,8 @@ public:
 	void	SetGM(bool toggle);
 	void	SetPVP(bool toggle);
 
-	inline bool	GetPVP()	const { return zone->GetZoneID() == 77 ? true : (m_pp.pvp != 0); }
+	inline bool     GetPVP()        const { if(zone->watermap != NULL) return zone->watermap->InPVPArea(x_pos, y_pos, z_pos) ? true : m_pp.pvp;
+						 else return  m_pp.pvp; }
 	inline bool	GetGM()		const { return m_pp.gm != 0; }
 
 	inline void	SetBaseClass(uint32 i) { m_pp.class_=i; }

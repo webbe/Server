@@ -50,6 +50,7 @@ public:
 	WaterRegionType BSPReturnRegionType(int32 node_number, float y, float x, float z) const;
 	bool InWater(float y, float x, float z) const;
 	bool InVWater(float y, float x, float z) const;
+	bool InPVPArea(float y, float x, float z) const;
 	bool InLava(float y, float x, float z) const;
 	bool InLiquid(float y, float x, float z) const;
 

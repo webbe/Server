@@ -105,6 +105,13 @@ bool WaterMap::InLava(float y, float x, float z) const {
 	return(BSPReturnRegionType(1, y, x, z) == RegionTypeLava);
 }
 
+bool WaterMap::InPVPArea(float y, float x, float z) const {
+	if(BSP_Root == NULL) {
+		return false;
+	}
+	return(BSPReturnRegionType(1, y, x, z) == RegionTypePVP);
+}
+
 bool WaterMap::InLiquid(float y, float x, float z) const {
 	if(BSP_Root == nullptr)	//if the water map isn't loaded, this will save ~1 CPU cycle
 		return false;

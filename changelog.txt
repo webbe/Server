@@ -1,5 +1,11 @@
 EQEMu Changelog (Started on Sept 24, 2003 15:50)
 -------------------------------------------------------
+== 11/09/2013 ==
+Webbe: Changed the "This is not a valid target" message (pets) to only display to the owner)
+Webbe: Modified Bot::IsBotNameAvailable to actually check the DB (otherwise it's a potential crash)
+Webbe: Changed Bots to sit when health is below 99.0%
+Webbe: Added PVP watermap type
+Webbe: Removed the forced PVP flag on the arena (the pit is still a PVP area)
 
 == 11/07/2013 ==
 KLS: Added a system to use the BaseData system in the client.
